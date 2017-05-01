@@ -1,25 +1,25 @@
 {-# LANGUAGE InstanceSigs #-}
 module Perhaps where
 
-data Perhaps a = Not | Exactly a deriving (Show, Eq, Ord)
+data Perhaps a = No | Exactly a deriving (Show, Eq, Ord)
 
 instance Monoid a => Monoid (Perhaps a) where
-  mempty = Not
+  mempty = No
   mappend (Exactly x) (Exactly y) = Exactly $ x `mappend` y
-  mappend Not y = y
-  mappend y Not =  y
+  mappend No y = y
+  mappend y No =  y
 
 instance Functor (Perhaps) where
   fmap :: (a -> b) -> Perhaps a -> Perhaps b
   fmap f (Exactly a) = Exactly $ f a
-  fmap _ Not = Not
+  fmap _ No = No
 
 instance Applicative (Perhaps) where
   pure :: a -> Perhaps a
   pure a = Exactly a
   (<*>) :: Perhaps (a -> b) -> Perhaps a -> Perhaps b
   (Exactly f) <*> (Exactly b) = Exactly (f b)
-  _ <*> _ = Not
+  _ <*> _ = No
 
 instance Monad Perhaps where
   return :: a -> Perhaps a
@@ -29,9 +29,9 @@ instance Monad Perhaps where
 
 instance Foldable Perhaps where
   foldr :: (a -> b -> b) -> b -> Perhaps a -> b
-  foldr _ z Not = z
+  foldr _ z No = z
   foldr f x (Exactly y) = f y x
 
 instance Traversable Perhaps where
-  traverse _ Not = pure Not
+  traverse _ No = pure No
   traverse f (Exactly x) = Exactly <$> f x
