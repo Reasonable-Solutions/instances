@@ -2,6 +2,7 @@ module Main where
 
 import Perhaps
 import Or
+import Items
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
