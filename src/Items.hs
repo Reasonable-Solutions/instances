@@ -30,9 +30,6 @@ instance Foldable (Items) where
   foldr _ v NoItems = v
 
 instance Traversable (Items) where
- -- traverse f = foldr cons' (pure NoItems)
- --   where cons' x ys = (Cons) <$> f x <*> ys
-
   sequenceA :: (Applicative f) => Items (f a) -> f (Items a)
   sequenceA NoItems = pure NoItems
   sequenceA (Cons x xs) = Cons <$> x <*> sequenceA xs
