@@ -1,4 +1,3 @@
-{-# LANGUAGE InstanceSigs #-}
 module Steit where
 
 newtype Steit s a =

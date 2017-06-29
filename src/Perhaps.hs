@@ -1,4 +1,3 @@
-{-# LANGUAGE InstanceSigs #-}
 module Perhaps where
 
 data Perhaps a = No | Exactly a deriving (Show, Eq, Ord)

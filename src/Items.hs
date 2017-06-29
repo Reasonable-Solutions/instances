@@ -1,4 +1,3 @@
-{-# LANGUAGE InstanceSigs #-}
 module Items where
 
 data Items a = NoItems | Cons a (Items a) deriving (Show, Eq, Ord)

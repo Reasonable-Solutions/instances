@@ -1,4 +1,3 @@
-{-# LANGUAGE InstanceSigs #-}
 module Or where
 
 data Or a b =
