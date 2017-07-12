@@ -3,6 +3,7 @@ module Main where
 import Perhaps
 import Or
 import Items
+import Two
 import Test.QuickCheck
 import Test.QuickCheck.Checkers
 import Test.QuickCheck.Classes
@@ -12,6 +13,9 @@ instance Arbitrary a => Arbitrary (Perhaps a)  where
 
 instance ( Arbitrary a, Arbitrary b ) => Arbitrary (Or a b)  where
   arbitrary = oneof [fmap First arbitrary, fmap Second arbitrary ]
+
+instance ( Arbitrary a, Arbitrary b ) => Arbitrary (Two a b)  where
+  arbitrary = (T arbitrary) arbitrary
 
 instance Arbitrary a  => Arbitrary (Items a) where
   arbitrary =
@@ -44,3 +48,8 @@ main = do
   quickBatch $ functor (undefined :: Items (Char, Bool, Integer))
   quickBatch $ applicative (undefined :: Items (Char, Bool, Integer))
   quickBatch $ traversable (undefined :: Items (Char, Integer, [Bool]))
+
+  quickBatch $ applicative (undefined :: Two (String, Char, Integer) (String, Char, Integer))
+ -- quickBatch $ functor (undefined :: Two (String, Char, Integer) (String, Char, Integer))
+ -- quickBatch $ traversable (undefined :: Two (String, Char, [Bool]) (String, Char, [Bool]))
+ -- quickBatch $ monad (undefined :: Two (String, Char, Integer) (String, Char, Integer))
