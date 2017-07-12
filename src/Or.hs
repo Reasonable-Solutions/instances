@@ -1,7 +1,18 @@
 module Or where
+import Data.Semigroup (mempty, Semigroup, (<>))
 
 data Or a b =
   First a | Second b deriving (Show, Eq)
+
+instance Semigroup (Or a b) where
+  First _ <> Second a = Second a
+  First _ <> First a = First a
+  Second a <> First _ = Second a
+  Second a <> Second _ = Second a
+
+instance Monoid a => Monoid (Or a b) where
+  mempty = First mempty
+  mappend = (<>)
 
 instance Functor (Or e) where
   fmap :: (a -> b) -> (Or e) a -> (Or e) b
