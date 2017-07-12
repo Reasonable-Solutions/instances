@@ -12,10 +12,10 @@ instance Arbitrary a => Arbitrary (Perhaps a)  where
   arbitrary = fmap Exactly arbitrary
 
 instance ( Arbitrary a, Arbitrary b ) => Arbitrary (Or a b)  where
-  arbitrary = oneof [fmap First arbitrary, fmap Second arbitrary ]
+  arbitrary = oneof [fmap First arbitrary, fmap Second arbitrary]
 
 instance ( Arbitrary a, Arbitrary b ) => Arbitrary (Two a b)  where
-  arbitrary = (T arbitrary) arbitrary
+  arbitrary = _
 
 instance Arbitrary a  => Arbitrary (Items a) where
   arbitrary =
@@ -28,7 +28,7 @@ instance Arbitrary a  => Arbitrary (Items a) where
 
 instance Eq a => EqProp (Perhaps a) where (=-=) = eq
 instance Eq a => EqProp (Items a) where (=-=) = eq
-instance ( Eq a, Eq b ) => EqProp (Or a b) where (=-=) = eq
+instance (Eq a, Eq b) => EqProp (Or a b) where (=-=) = eq
 
 main :: IO ()
 main = do
